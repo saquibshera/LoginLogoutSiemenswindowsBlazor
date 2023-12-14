@@ -1,0 +1,30 @@
+﻿@page "/"
+@inject Blazored.SessionStorage.ISessionStorageService session
+@using storagebrowser.Data
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+<button type="button" @onclick="createsession" >Set the session</button>
+<h1>@message</h1>
+@code{
+    string message;
+    public void createsession()
+    {
+        var user = new UserInfo
+            {
+                Id = 1,
+                Name = "Stephen",
+                Address = "Downtown"
+            };
+        session.SetItemAsync("SessionUser", user);
+        message = "session set up successfully";
+    }
+
+}
+
+

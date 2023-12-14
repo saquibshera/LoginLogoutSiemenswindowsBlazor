@@ -1,0 +1,46 @@
+﻿@page "/sessionget"
+@inject Blazored.SessionStorage.ISessionStorageService session
+@using storagebrowser.Data
+<button type="button" @onclick="clearsession">Clear Session</button>
+<button type="button" @onclick="Getsession">Get session</button>
+<h3>@message</h3>
+<table class="table">
+    @if (user != null)
+    {
+        <tr>
+            <td>
+            @user.Id
+        </td>
+        <td>
+            @user.Name
+        </td>
+        <td>
+            @user.Address
+        </td>
+        </tr>
+    }
+    else
+    {
+        <tr>
+            <td>
+                No session found
+            </td>
+        </tr>
+    }
+</table>
+
+
+@code {
+    public string message;
+    public UserInfo user;
+    public async Task Getsession()
+    {
+        user =await session.GetItemAsync<UserInfo>("SessionUser");
+    }
+    public void clearsession()
+    {
+        session.ClearAsync();
+        user = new UserInfo();
+        message = "Cleared session successfully";
+    }
+}
